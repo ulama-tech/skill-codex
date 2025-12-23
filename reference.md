@@ -10,7 +10,7 @@ Complete reference for Every Code CLI (just-every/code).
 | ------------- | ----- | ------------------------------------------------------------------ |
 | `--full-auto` |       | Auto-approve all tool calls, no prompts                            |
 | `--sandbox`   |       | Sandbox mode: `read-only`, `workspace-write`, `danger-full-access` |
-| `--model`     | `-m`  | Model selection (e.g., `gpt-5.1`)                                  |
+| `--model`     | `-m`  | Model selection (e.g., `gpt-5.2-codex`)                            |
 | `--read-only` |       | Prevent file modifications                                         |
 | `--config`    | `-c`  | Override config values: `key=value`                                |
 
@@ -120,7 +120,7 @@ Legacy (read-only): `~/.codex/config.toml`
 
 ```toml
 # Model settings
-model = "gpt-5.1"
+model = "gpt-5.2-codex"
 model_reasoning_effort = "medium"
 model_verbosity = "low"
 
@@ -185,19 +185,19 @@ sandbox_mode = "danger-full-access"
 [[subagents.commands]]
 name = "plan"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 orchestrator_instructions = "Guidance for coordinator"
 agent_instructions = "Preamble for each agent"
 
 [[subagents.commands]]
 name = "solve"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 
 [[subagents.commands]]
 name = "code"
 read_only = false
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 ```
 
 ### Agent Configuration
@@ -251,22 +251,18 @@ show_raw_agent_reasoning = true
 
 ## Model Selection
 
-### Available Models
+### Default Model
 
-| Model          | Use Case                 |
-| -------------- | ------------------------ |
-| `gpt-5.1`      | Default, general purpose |
-| `gpt-5-codex`  | Code-specialized         |
-| `gpt-5.1-mini` | Faster, lighter tasks    |
+The default model is `gpt-5.2-codex`.
 
 ### Usage
 
 ```bash
 # Override model
-code --model gpt-5-codex "analyze code"
+code --model gpt-5.2-codex "analyze code"
 
 # In config
-model = "gpt-5.1"
+model = "gpt-5.2-codex"
 ```
 
 ## Keyboard Shortcuts (Interactive)

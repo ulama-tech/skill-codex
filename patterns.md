@@ -205,17 +205,9 @@ echo "Review and polish" | code exec resume --last
 
 Choose the right model for the task.
 
-### Decision Tree
+### Default Model
 
-```
-Is the task complex (architecture, multi-file, deep analysis)?
-├── Yes → Use default (gpt-5.1) or multi-agent (/plan, /solve)
-└── No → Is it code-specific?
-    ├── Yes → Use gpt-5-codex
-    └── No → Is speed critical?
-        ├── Yes → Use gpt-5.1-mini
-        └── No → Use default
-```
+The default model is `gpt-5.2-codex`. For complex tasks, use multi-agent commands instead of switching models.
 
 ### Examples
 
@@ -223,11 +215,11 @@ Is the task complex (architecture, multi-file, deep analysis)?
 # Complex: Use multi-agent
 /plan "Design microservices architecture"
 
-# Code-specific: Use codex model
-code --model gpt-5-codex "Optimize this algorithm"
+# Standard task: Use default model
+code "Optimize this algorithm"
 
-# Quick task: Use mini model
-code --model gpt-5.1-mini "Format this JSON"
+# Override model if needed
+code --model gpt-5.2-codex "Format this JSON"
 ```
 
 ## Pattern 9: Error Recovery

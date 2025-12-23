@@ -171,7 +171,7 @@ Change AI model.
 **Usage:**
 
 ```bash
-/model gpt-5-codex
+/model gpt-5.2-codex
 ```
 
 ---
@@ -314,7 +314,7 @@ Orchestrate Claude, Gemini, and GPT together for better results.
 ```toml
 [[subagents.commands]]
 name = "plan"
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 ```
 
 ### 2. Auto-Review

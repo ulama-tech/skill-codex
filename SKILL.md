@@ -78,7 +78,7 @@ echo "analyze security" | code exec
 | ------------------ | ---------------------------------------------------- |
 | `--full-auto`      | Automatic execution, no approval prompts             |
 | `--sandbox <mode>` | `read-only`, `workspace-write`, `danger-full-access` |
-| `--model <name>`   | Override default model (e.g., `gpt-5.1`)             |
+| `--model <name>`   | Override default model (e.g., `gpt-5.2-codex`)       |
 | `--config key=val` | Override config values                               |
 | `--read-only`      | Prevent file modifications                           |
 | `-C, --cd <DIR>`   | Change working directory                             |
@@ -172,7 +172,7 @@ code --full-auto --sandbox workspace-write "create user authentication module"
 ### Example Configuration
 
 ```toml
-model = "gpt-5.1"
+model = "gpt-5.2-codex"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
@@ -191,12 +191,12 @@ sandbox_mode = "read-only"
 [[subagents.commands]]
 name = "plan"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 
 [[subagents.commands]]
 name = "solve"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 ```
 
 ## Error Handling

@@ -95,13 +95,13 @@ code --full-auto --sandbox workspace-write "create user module"
 Config file: `~/.code/config.toml`
 
 ```toml
-model = "gpt-5.1"
+model = "gpt-5.2-codex"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
 [[subagents.commands]]
 name = "plan"
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
 ```
 
 ## Why Use Every Code from Claude Code?
