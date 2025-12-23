@@ -1,58 +1,124 @@
-Leave a star ⭐ if you like it 😘
+# Every Code CLI Skill for Claude Code
 
-# Codex Integration for Claude Code
+A Claude Code skill that enables effective use of Every Code CLI (`just-every/code`) as a powerful multi-agent orchestration tool.
 
-<img width="2288" height="808" alt="skillcodex" src="https://github.com/user-attachments/assets/85336a9f-4680-479e-b3fe-d6a68cadc051" />
+## What This Skill Does
 
+This skill teaches Claude Code how to wield Every Code CLI for:
 
-## Purpose
-Enable Claude Code to invoke the Codex CLI (`codex exec` and session resumes) for automated code analysis, refactoring, and editing workflows.
+- **Multi-Agent Consensus** - Orchestrate Claude, Gemini, and GPT together
+- **Code Generation** - Create apps, components, and modules with AI collaboration
+- **Problem Solving** - Race multiple AIs to find solutions fastest
+- **Browser Integration** - Chrome DevTools automation via CDP
+- **Auto-Drive Mode** - Hands-off multi-step task coordination
+- **Code Review** - Get alternative AI perspectives on code
 
 ## Prerequisites
-- `codex` CLI installed and available on `PATH`.
-- Codex configured with valid credentials and settings.
-- Confirm the installation by running `codex --version`; resolve any errors before using the skill.
 
-## Installation
+- Every Code CLI installed and available as `code` on PATH
+- Configured with valid credentials (OpenAI API key or ChatGPT login)
+- For multi-agent features: Claude CLI and Gemini CLI configured
 
-Download this repo and store the skill in ~/.claude/skills/codex
-
+```bash
+# Verify installation
+code --version
 ```
-git clone --depth 1 git@github.com:skills-directory/skill-codex.git /tmp/skills-temp && \
-mkdir -p ~/.claude/skills && \
-cp -r /tmp/skills-temp/ ~/.claude/skills/codex && \
-rm -rf /tmp/skills-temp
-```
+
+## Files
+
+| File           | Purpose                                                |
+| -------------- | ------------------------------------------------------ |
+| `SKILL.md`     | Main skill definition - when to use, core instructions |
+| `reference.md` | Complete CLI command and flag reference                |
+| `templates.md` | Reusable prompt templates for common tasks             |
+| `patterns.md`  | Integration patterns and workflows                     |
+| `tools.md`     | Built-in tools and subagent commands                   |
 
 ## Usage
 
-### Important: Thinking Tokens
-By default, this skill suppresses thinking tokens (stderr output) using `2>/dev/null` to avoid bloating Claude Code's context window. If you want to see the thinking tokens for debugging or insight into Codex's reasoning process, explicitly ask Claude to show them.
+Once installed, Claude Code automatically uses this skill when appropriate. Just ask:
 
-### Example Workflow
-
-**User prompt:**
 ```
-Use codex to analyze this repository and suggest improvements for my claude code skill.
+"Use Every Code to plan this feature with multiple AIs"
+"Have code review this module from a different perspective"
+"Use /solve to figure out why this test is failing"
+"Run /auto to refactor and add tests"
 ```
 
-**Claude Code response:**
-Claude will activate the Codex skill and:
-1. Ask which model to use (`gpt-5` or `gpt-5-codex`) unless already specified in your prompt.
-2. Ask which reasoning effort level (`low`, `medium`, or `high`) unless already specified in your prompt.
-3. Select appropriate sandbox mode (defaults to `read-only` for analysis)
-4. Run a command like:
+## Key Features
+
+### Multi-Agent Commands
+
+- `/plan` - Consensus planning (Claude + Gemini + GPT collaborate)
+- `/solve` - Racing problem solving (fastest AI wins)
+- `/code` - Multi-agent code generation
+- `/auto` - Auto-drive for multi-step tasks
+
+### Browser Integration
+
+- `/chrome` - Connect to external Chrome via CDP
+- `/browser` - Use internal headless browser
+- `Ctrl+B` - ASCII preview in terminal
+
+### Sandbox Modes
+
+| Mode                 | Use Case                          |
+| -------------------- | --------------------------------- |
+| `read-only`          | Analysis, review, research        |
+| `workspace-write`    | Apply local edits                 |
+| `danger-full-access` | Network access, broad permissions |
+
+## Quick Reference
+
 ```bash
-codex exec -m gpt-5-codex \
-  --config model_reasoning_effort="high" \
-  --sandbox read-only \
-  --full-auto \
-  --skip-git-repo-check \
-  "Analyze this Claude Code skill repository comprehensively..." 2>/dev/null
+# Multi-agent planning
+/plan "implement OAuth authentication"
+
+# Racing problem solver
+/solve "why does the memory usage spike?"
+
+# Code generation with consensus
+/code "add rate limiting to API"
+
+# Read-only analysis
+code --sandbox read-only "review security"
+
+# Full-auto code generation
+code --full-auto --sandbox workspace-write "create user module"
+
+# Browser testing
+/browser
 ```
 
-**Result:**
-Claude will summarize the Codex analysis output, highlighting key suggestions and asking if you'd like to continue with follow-up actions.
+## Configuration
 
-### Detailed Instructions
-See `SKILL.md` for complete operational instructions, CLI options, and workflow guidance.
+Config file: `~/.code/config.toml`
+
+```toml
+model = "gpt-5.1"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[[subagents.commands]]
+name = "plan"
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+```
+
+## Why Use Every Code from Claude Code?
+
+| Use Case              | Benefit                           |
+| --------------------- | --------------------------------- |
+| Multi-agent consensus | Claude + Gemini + GPT collaborate |
+| Second opinion        | Different AI perspective on code  |
+| Browser testing       | Chrome DevTools integration       |
+| Auto-drive            | Hands-off multi-step workflows    |
+| Parallel work         | Offload tasks while continuing    |
+
+## Links
+
+- [just-every/code GitHub](https://github.com/just-every/code)
+- [Context7 Documentation](https://context7.com/just-every/code)
+
+## License
+
+MIT

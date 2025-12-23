@@ -1,41 +1,259 @@
 ---
-name: codex
-description: Use when the user asks to run Codex CLI (codex exec, codex resume) or references OpenAI Codex for code analysis, refactoring, or automated editing
+name: codex-cli
+description: Wield Every Code (just-every/code fork) as a powerful auxiliary tool for multi-agent code generation, consensus planning, browser automation, and parallel AI orchestration. Use when tasks benefit from multiple AI perspectives (Claude+Gemini+GPT), browser testing, or automated coding workflows.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Grep
+  - Glob
 ---
 
-# Codex Skill Guide
+# Every Code CLI Integration Skill
 
-## Running a Task
-1. Ask the user (via `AskUserQuestion`) which model to run (`gpt-5-codex` or `gpt-5`) AND which reasoning effort to use (`high`, `medium`, or `low`) in a **single prompt with two questions**.
-2. Select the sandbox mode required for the task; default to `--sandbox read-only` unless edits or network access are necessary.
-3. Assemble the command with the appropriate options:
-   - `-m, --model <MODEL>`
-   - `--config model_reasoning_effort="<high|medium|low>"`
-   - `--sandbox <read-only|workspace-write|danger-full-access>`
-   - `--full-auto`
-   - `-C, --cd <DIR>`
-   - `--skip-git-repo-check`
-3. Always use --skip-git-repo-check.
-4. When continuing a previous session, use `codex exec --skip-git-repo-check resume --last` via stdin. When resuming don't use any configuration flags unless explicitly requested by the user e.g. if he species the model or the reasoning effort when requesting to resume a session. Resume syntax: `echo "your prompt here" | codex exec --skip-git-repo-check resume --last 2>/dev/null`. All flags have to be inserted between exec and resume.
-5. **IMPORTANT**: By default, append `2>/dev/null` to all `codex exec` commands to suppress thinking tokens (stderr). Only show stderr if the user explicitly requests to see thinking tokens or if debugging is needed.
-6. Run the command, capture stdout/stderr (filtered as appropriate), and summarize the outcome for the user.
-7. **After Codex completes**, inform the user: "You can resume this Codex session at any time by saying 'codex resume' or asking me to continue with additional analysis or changes."
+This skill enables Claude Code to effectively orchestrate Every Code CLI (`code`) - a fork of OpenAI's Codex CLI with multi-agent consensus, browser integration, and enhanced automation features.
 
-### Quick Reference
-| Use case | Sandbox mode | Key flags |
-| --- | --- | --- |
-| Read-only review or analysis | `read-only` | `--sandbox read-only 2>/dev/null` |
-| Apply local edits | `workspace-write` | `--sandbox workspace-write --full-auto 2>/dev/null` |
-| Permit network or broad access | `danger-full-access` | `--sandbox danger-full-access --full-auto 2>/dev/null` |
-| Resume recent session | Inherited from original | `echo "prompt" \| codex exec --skip-git-repo-check resume --last 2>/dev/null` (no flags allowed) |
-| Run from another directory | Match task needs | `-C <DIR>` plus other flags `2>/dev/null` |
+## When to Use This Skill
 
-## Following Up
-- After every `codex` command, immediately use `AskUserQuestion` to confirm next steps, collect clarifications, or decide whether to resume with `codex exec resume --last`.
-- When resuming, pipe the new prompt via stdin: `echo "new prompt" | codex exec resume --last 2>/dev/null`. The resumed session automatically uses the same model, reasoning effort, and sandbox mode from the original session.
-- Restate the chosen model, reasoning effort, and sandbox mode when proposing follow-up actions.
+### Ideal Use Cases
+
+1. **Multi-Agent Consensus**
+   - `/plan` - Get Claude, Gemini, and GPT to collaboratively plan code changes
+   - `/solve` - Race multiple AIs to solve complex problems (fastest wins)
+   - `/code` - Generate code with multi-agent consensus
+
+2. **Second AI Perspective**
+   - Code review from a different AI's viewpoint
+   - Bug detection Claude might have missed
+   - Alternative implementation approaches
+
+3. **Browser Integration**
+   - `/chrome` - Connect to external Chrome via CDP
+   - `/browser` - Use internal headless browser
+   - Visual testing and screenshot comparisons
+
+4. **Auto-Drive Mode**
+   - `/auto` - Hands-off multi-step task coordination
+   - Background task execution
+   - Automated workflows
+
+5. **Parallel Processing**
+   - Offload tasks while continuing other work
+   - Run multiple code generations simultaneously
+
+### When NOT to Use
+
+- Simple, quick tasks (overhead not worth it)
+- Tasks requiring immediate response
+- When context is already loaded and understood
+- Interactive refinement requiring conversation
+
+## Core Instructions
+
+### 1. Verify Installation
+
+```bash
+command -v code || which code
+```
+
+### 2. Basic Command Patterns
+
+```bash
+# Interactive mode with prompt
+code "explain this codebase"
+
+# Full-auto mode (no approval prompts)
+code --full-auto "create a todo app"
+
+# Non-interactive execution
+code exec "fix all TypeScript errors"
+
+# Pipe prompt via stdin
+echo "analyze security" | code exec
+```
+
+### 3. Key CLI Flags
+
+| Flag               | Description                                          |
+| ------------------ | ---------------------------------------------------- |
+| `--full-auto`      | Automatic execution, no approval prompts             |
+| `--sandbox <mode>` | `read-only`, `workspace-write`, `danger-full-access` |
+| `--model <name>`   | Override default model (e.g., `gpt-5.1`)             |
+| `--config key=val` | Override config values                               |
+| `--read-only`      | Prevent file modifications                           |
+| `-C, --cd <DIR>`   | Change working directory                             |
+
+### 4. Sandbox Modes
+
+| Mode                 | Use Case                             |
+| -------------------- | ------------------------------------ |
+| `read-only`          | Analysis, review, research (default) |
+| `workspace-write`    | Apply local edits                    |
+| `danger-full-access` | Network access, broad permissions    |
+
+### 5. Multi-Agent Commands
+
+```bash
+# Consensus planning (all agents review and consolidate)
+/plan "implement user authentication with OAuth"
+
+# Racing solve (fastest agent wins)
+/solve "why does deleting one user drop the database?"
+
+# Multi-agent code generation
+/code "add rate limiting to the API"
+
+# Auto-drive for multi-step tasks
+/auto "refactor the authentication module and add tests"
+```
+
+### 6. Browser Integration
+
+```bash
+# Connect to external Chrome via CDP
+/chrome
+
+# Use internal headless browser
+/browser
+
+# ASCII preview in terminal
+Ctrl+B
+```
+
+### 7. Session Management
+
+```bash
+# Resume last session
+echo "continue with the refactor" | code exec resume --last
+
+# Resume with additional context
+echo "now add tests" | code exec resume --last
+```
+
+## Quick Reference Commands
+
+### Analysis (Read-Only)
+
+```bash
+code --sandbox read-only "review this codebase for security issues"
+```
+
+### Code Generation
+
+```bash
+code --full-auto --sandbox workspace-write "create user authentication module"
+```
+
+### Multi-Agent Planning
+
+```bash
+/plan "design a microservices architecture for this monolith"
+```
+
+### Problem Solving
+
+```bash
+/solve "identify the root cause of the memory leak"
+```
+
+### Browser Testing
+
+```bash
+/browser
+# Then: "take a screenshot of the login page and check for accessibility issues"
+```
+
+## Configuration
+
+### Config File Location
+
+`~/.code/config.toml`
+
+### Example Configuration
+
+```toml
+model = "gpt-5.1"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[profiles.full_auto]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[profiles.readonly]
+approval_policy = "never"
+sandbox_mode = "read-only"
+```
+
+### Subagent Configuration
+
+```toml
+[[subagents.commands]]
+name = "plan"
+read_only = true
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+
+[[subagents.commands]]
+name = "solve"
+read_only = true
+agents = ["claude-opus-4.5", "gemini", "code-gpt-5.1"]
+```
 
 ## Error Handling
-- Stop and report failures whenever `codex --version` or a `codex exec` command exits non-zero; request direction before retrying.
-- Before you use high-impact flags (`--full-auto`, `--sandbox danger-full-access`, `--skip-git-repo-check`) ask the user for permission using AskUserQuestion unless it was already given.
-- When output includes warnings or partial results, summarize them and ask how to adjust using `AskUserQuestion`.
+
+### Command Failures
+
+- Stop and report failures when `code` exits non-zero
+- Request direction before retrying
+
+### High-Impact Operations
+
+Before using these flags, ask user for permission:
+
+- `--full-auto`
+- `--sandbox danger-full-access`
+
+### Rate Limits
+
+- CLI auto-retries with backoff
+- Use appropriate models for task complexity
+
+## Integration Workflow
+
+### Standard Generate-Review Cycle
+
+```bash
+# 1. Generate with multi-agent consensus
+/code "create REST API for user management"
+
+# 2. Review the generated code
+code --sandbox read-only "review the generated code for bugs and security"
+
+# 3. Fix identified issues
+code --full-auto --sandbox workspace-write "fix the issues identified"
+```
+
+### Cross-Validation with Claude
+
+```bash
+# 1. Claude generates code (using normal Claude Code tools)
+# 2. Every Code reviews
+code --sandbox read-only "review this code for issues: [paste code]"
+```
+
+## Unique Capabilities
+
+These features are available only through Every Code:
+
+1. **Multi-Agent Consensus** - Orchestrate Claude, Gemini, GPT together
+2. **Auto-Drive Mode** - Automated multi-step workflows
+3. **Browser Integration** - Chrome DevTools via CDP
+4. **Auto-Review** - Background ghost-commit watcher
+5. **Theme System** - Visual customization
+
+## See Also
+
+- `reference.md` - Complete command and flag reference
+- `templates.md` - Prompt templates for common operations
+- `patterns.md` - Advanced integration patterns
+- `tools.md` - Built-in tools and subagent commands
