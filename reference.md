@@ -185,19 +185,19 @@ sandbox_mode = "danger-full-access"
 [[subagents.commands]]
 name = "plan"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 orchestrator_instructions = "Guidance for coordinator"
 agent_instructions = "Preamble for each agent"
 
 [[subagents.commands]]
 name = "solve"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 
 [[subagents.commands]]
 name = "code"
 read_only = false
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 ```
 
 ### Agent Configuration
@@ -259,7 +259,7 @@ The default model is `gpt-5.2-codex`.
 
 ```bash
 # Override model
-code --model gpt-5.2-codex "analyze code"
+code --model gpt-5.2 "analyze code"
 
 # In config
 model = "gpt-5.2-codex"

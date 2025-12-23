@@ -191,12 +191,12 @@ sandbox_mode = "read-only"
 [[subagents.commands]]
 name = "plan"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 
 [[subagents.commands]]
 name = "solve"
 read_only = true
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 ```
 
 ## Error Handling

@@ -101,7 +101,7 @@ sandbox_mode = "workspace-write"
 
 [[subagents.commands]]
 name = "plan"
-agents = ["claude-opus-4.5", "gemini", "code-gpt-5.2-codex"]
+agents = ["claude-opus-4.5", "gemini", "gpt-5.2-codex"]
 ```
 
 ## Why Use Every Code from Claude Code?

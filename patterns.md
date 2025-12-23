@@ -207,7 +207,7 @@ Choose the right model for the task.
 
 ### Default Model
 
-The default model is `gpt-5.2-codex`. For complex tasks, use multi-agent commands instead of switching models.
+The default model is `gpt-5.2-codex`. For complex tasks, use multi-agent commands instead of switching models (see Pattern 1 for why this works).
 
 ### Examples
 
@@ -219,7 +219,7 @@ The default model is `gpt-5.2-codex`. For complex tasks, use multi-agent command
 code "Optimize this algorithm"
 
 # Override model if needed
-code --model gpt-5.2-codex "Format this JSON"
+code --model gpt-5.2 "Format this JSON"
 ```
 
 ## Pattern 9: Error Recovery
