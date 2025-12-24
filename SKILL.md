@@ -1,6 +1,6 @@
 ---
 name: code
-description: Wield Every Code (just-every/code, a fork of codex-cli) as a powerful auxiliary tool for multi-agent code generation, consensus planning, browser automation, and parallel AI orchestration. Use when tasks benefit from multiple AI perspectives (Claude+Gemini+GPT), browser testing, or automated coding workflows.
+description: Execute Every Code CLI (just-every/code, a fork of codex-cli) for multi-agent code generation, consensus planning, browser automation, and parallel AI orchestration. Use when user explicitly requests Every Code CLI operations, multi-agent consensus (/plan, /solve, /code), or browser automation via Chrome DevTools.
 allowed-tools:
   - Bash
   - Read

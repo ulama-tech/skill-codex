@@ -114,7 +114,6 @@ code sandbox linux [--full-auto] [COMMAND]...
 ### Config File Location
 
 Primary: `~/.code/config.toml`
-Legacy (read-only): `~/.codex/config.toml`
 
 ### Basic Configuration
 
