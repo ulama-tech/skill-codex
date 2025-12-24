@@ -13,6 +13,20 @@ allowed-tools:
 
 This skill enables Claude Code to effectively orchestrate Every Code CLI (`code`) - a fork of OpenAI's Codex CLI with multi-agent consensus, browser integration, and enhanced automation features.
 
+## Agent Handoff
+
+**For CLI execution, spawn the dedicated `codex-cli` agent:**
+
+```
+Task(subagent_type: "codex-cli", prompt: "[your task]")
+```
+
+Benefits:
+
+- CLI output stays in isolated subagent context
+- Main conversation receives only concise summaries
+- Reduced context pollution from verbose CLI responses
+
 ## When to Use This Skill
 
 ### Ideal Use Cases
