@@ -1,31 +1,29 @@
 ---
-name: codex-cli
-description: Wield Every Code (just-every/code fork) as a powerful auxiliary tool for multi-agent code generation, consensus planning, browser automation, and parallel AI orchestration. Use when tasks benefit from multiple AI perspectives (Claude+Gemini+GPT), browser testing, or automated coding workflows.
+name: code
+description: Wield Every Code (just-every/code, a fork of codex-cli) as a powerful auxiliary tool for multi-agent code generation, consensus planning, browser automation, and parallel AI orchestration. Use when tasks benefit from multiple AI perspectives (Claude+Gemini+GPT), browser testing, or automated coding workflows.
 allowed-tools:
   - Bash
   - Read
-  - Write
   - Grep
   - Glob
 ---
 
+<!-- Last verified: 2025-12-24 | CLI version: 0.6.14 -->
+<!-- Model names in examples may need updating as new versions release -->
+
 # Every Code CLI Integration Skill
 
-This skill enables Claude Code to effectively orchestrate Every Code CLI (`code`) - a fork of OpenAI's Codex CLI with multi-agent consensus, browser integration, and enhanced automation features.
+This skill enables Claude Code to effectively orchestrate Every Code CLI (`code`) - the `just-every/code` package, a fork of OpenAI's Codex CLI with multi-agent consensus, browser integration, and enhanced automation features.
 
 ## Agent Handoff
 
-**For CLI execution, spawn the dedicated `codex-cli` agent:**
+Spawn the dedicated agent for CLI execution:
 
 ```
-Task(subagent_type: "codex-cli", prompt: "[your task]")
+Task(subagent_type: "code", prompt: "[task]")
 ```
 
-Benefits:
-
-- CLI output stays in isolated subagent context
-- Main conversation receives only concise summaries
-- Reduced context pollution from verbose CLI responses
+This keeps CLI output isolated and returns concise summaries.
 
 ## When to Use This Skill
 
@@ -107,31 +105,27 @@ echo "analyze security" | code exec
 
 ### 5. Multi-Agent Commands
 
+These slash commands only work **inside an interactive `code` session**:
+
 ```bash
-# Consensus planning (all agents review and consolidate)
-/plan "implement user authentication with OAuth"
+# First start an interactive session:
+code
 
-# Racing solve (fastest agent wins)
-/solve "why does deleting one user drop the database?"
-
-# Multi-agent code generation
-/code "add rate limiting to the API"
-
-# Auto-drive for multi-step tasks
-/auto "refactor the authentication module and add tests"
+# Then use these commands within the session:
+/plan "implement user authentication with OAuth"  # Consensus planning
+/solve "why does deleting one user drop the database?"  # Racing solve
+/code "add rate limiting to the API"  # Multi-agent code generation
+/auto "refactor the authentication module and add tests"  # Auto-drive
 ```
 
-### 6. Browser Integration
+### 6. Browser Integration (Interactive Session)
+
+These commands work inside an interactive `code` session:
 
 ```bash
-# Connect to external Chrome via CDP
-/chrome
-
-# Use internal headless browser
-/browser
-
-# ASCII preview in terminal
-Ctrl+B
+/chrome    # Connect to external Chrome via CDP
+/browser   # Use internal headless browser
+Ctrl+B     # ASCII preview in terminal
 ```
 
 ### 7. Session Management
@@ -158,21 +152,24 @@ code --sandbox read-only "review this codebase for security issues"
 code --full-auto --sandbox workspace-write "create user authentication module"
 ```
 
-### Multi-Agent Planning
+### Multi-Agent Planning (Interactive Session)
 
 ```bash
+# Inside a `code` session:
 /plan "design a microservices architecture for this monolith"
 ```
 
-### Problem Solving
+### Problem Solving (Interactive Session)
 
 ```bash
+# Inside a `code` session:
 /solve "identify the root cause of the memory leak"
 ```
 
-### Browser Testing
+### Browser Testing (Interactive Session)
 
 ```bash
+# Inside a `code` session:
 /browser
 # Then: "take a screenshot of the login page and check for accessibility issues"
 ```
@@ -237,10 +234,11 @@ Before using these flags, ask user for permission:
 ### Standard Generate-Review Cycle
 
 ```bash
-# 1. Generate with multi-agent consensus
+# 1. Generate with multi-agent consensus (in interactive session)
+code  # Start session
 /code "create REST API for user management"
 
-# 2. Review the generated code
+# 2. Review the generated code (new session or standalone)
 code --sandbox read-only "review the generated code for bugs and security"
 
 # 3. Fix identified issues
